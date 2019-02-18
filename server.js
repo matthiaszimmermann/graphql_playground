@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
@@ -28,21 +30,8 @@ const userRepository = new UserRepository();
  *    field to the root query which will return an array
  *    of users.
  */
-const schema = buildSchema(`
-    "A user."
-    type User {
-        id: Int!           # non-nullable integer
-        login: String!     # non-nullable string
-        firstName: String!
-        lastName: String!
-    }
-    
-    "The root of it all."
-    type Query {
-        "Returns a list of users."
-        users: [User]
-    }
-`);
+const schema_content = fs.readFileSync('./user.sdl', {flag:'r'});
+const schema = buildSchema("" + schema_content);
 
 /* 3. Add a resolver for our new query. Here it will only
  *    pass the work through to the repository.
