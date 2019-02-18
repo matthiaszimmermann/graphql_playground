@@ -1,3 +1,6 @@
+# node module directory
+./node_modules/**
+
 # Compiled class file
 *.class
 
